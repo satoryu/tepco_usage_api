@@ -8,6 +8,12 @@ class TepcoUsage
       JSON.parse(response.body)
     end
 
+    def at(date)
+      path = "/#{date.year}/#{date.month}/#{date.day}.json"
+      response = request(path)
+      JSON.parse(response.body)
+    end
+
     private
     def request(path)
       http.request_get(path) 
