@@ -1,9 +1,11 @@
 require 'net/http'
+require 'json'
 
 class TepcoUsage
   class << self
     def latest
       response = request('/latest.json')
+      JSON.parse(response.body)
     end
 
     private
