@@ -72,5 +72,45 @@ describe TepcoUsage do
       subject{TepcoUsage.at(Date.today)}
       it { should_not be_nil }
     end
+    context "Given Time object" do
+      before do
+        @now = Time.now
+        path = "/#{@now.year}/#{@now.month}/#{@now.day}/#{@now.hour}.json"
+        TepcoUsage.stub!(:request).with(path).and_return do
+          mock = mock(Object.new, :body => <<-JSON)
+          [
+            {
+              "saving": false, 
+              "hour": 0, 
+              "capacity_updated": "2011-03-25 16:05:00", 
+              "month": 3, 
+              "usage_updated": "2011-03-25 16:30:49", 
+              "entryfor": "2011-03-25 15:00:00", 
+              "capacity_peak_period": null, 
+              "year": 2011, 
+              "usage": 2889, 
+              "capacity": 3750, 
+              "day": 26
+            }, 
+            {
+              "saving": false, 
+              "hour": 1, 
+              "capacity_updated": "2011-03-25 16:05:00", 
+              "month": 3, 
+              "usage_updated": "2011-03-25 17:05:49", 
+              "entryfor": "2011-03-25 16:00:00", 
+              "capacity_peak_period": null, 
+              "year": 2011, 
+              "usage": 2758, 
+              "capacity": 3750, 
+              "day": 26
+            } 
+          ]
+          JSON
+        end
+      end
+      subject{TepcoUsage.at(@now)}
+      it { should_not be_nil }
+    end
   end
 end
