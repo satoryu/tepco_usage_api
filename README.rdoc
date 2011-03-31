@@ -1,0 +1,20 @@
+= About This Gem
+
+This gem provides tepco-usage-api wrapper class. 
+The wrapper class allows us to easily get the power usage information provided by TEPCO. 
+
+- http://tepco-usage-api.appspot.com
+- http://www.tepco.co.jp/
+
+= Installation
+
+ gem install tepco_usage_api
+
+= Usage
+
+ require 'tepco_usage_api'
+
+ puts TepcoUsage.latest
+
+Autho:: Tatsuya Sato
+E-mail:: satoryu.1981@gmail.com
