@@ -113,4 +113,16 @@ describe TepcoUsage do
       it { should_not be_nil }
     end
   end
+  describe "#in" do
+    before do
+      @now = Time.now
+      path = "/#{@now.year}/#{@now.month}.json"
+      TepcoUsage.stub!(:request).with(path).and_return do
+        mock(Object.new, :body => '{"body": "dummy"}')
+      end
+    end
+
+    subject{TepcoUsage.in @now}
+    it { should_not be_nil } 
+  end
 end
