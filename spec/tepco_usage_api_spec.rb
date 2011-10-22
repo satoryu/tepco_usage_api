@@ -130,4 +130,23 @@ describe TepcoUsage do
     subject{TepcoUsage.in @now}
     it { should_not be_nil }
   end
+
+  context "Configuration" do
+    describe "About Proxy" do
+      before do
+        host = 'proxy.example.com'
+        port = 4567
+        user = 'proxy_user'
+        password = 'proxy_pass'
+        @proxy = URI.parse("http://#{user}:#{password}@#{host}:#{port}")
+        @tepco = TepcoUsage.new(:proxy => @proxy)
+      end
+      subject {@tepco.send :http_class}
+      it { should be_proxy_class }
+      its(:proxy_address) { should == @proxy.host }
+      its(:proxy_port) { should == @proxy.port }
+      its(:proxy_user) { should == @proxy.user }
+      its(:proxy_pass) { should == @proxy.password }
+    end
+  end
 end
