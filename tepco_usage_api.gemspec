@@ -4,7 +4,7 @@ Gem::Specification.new do |spec|
   spec.name = 'tepco_usage_api'
   spec.required_ruby_version = '>= 1.8.7'
   spec.summary = 'The gem to talk with Tepco Usage API. '
-  spec.version = '0.3.0'
+  spec.version = '0.4.0'
   spec.license = 'MIT'
   spec.author  = 'Tatsuya Sato'
   spec.email   = 'satoryu.1981@gmail.com'
