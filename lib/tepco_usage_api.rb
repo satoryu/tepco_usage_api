@@ -37,15 +37,18 @@ class TepcoUsage
 
   private
 
+  def http_class
+    if proxy = @options[:proxy]
+      proxy_uri = proxy.is_a?(URI) ? proxy : URI.parse(proxy)
+      Net::HTTP.Proxy(proxy_uri.host, proxy_uri.port, proxy_uri.user, proxy_uri.password)
+    else
+      Net::HTTP
+    end
+  end
+
   def create_http
     host = 'tepco-usage-api.appspot.com'
-    if @options[:proxy].nil?
-      return Net::HTTP.new(host)
-    end
-
-    proxy = @options[:proxy]
-    proxy_uri = proxy.is_a?(URI) ? proxy : URI.parse(proxy)
-    Net::HTTP.Proxy(proxy_uri.host, proxy_uri.port, proxy_uri.user, proxy_uri.password).new(host)
+    http_class.new(host)
   end
 
   def http
