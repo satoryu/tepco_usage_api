@@ -16,5 +16,10 @@ The wrapper class allows us to easily get the power usage information provided b
 
  puts TepcoUsage.latest
 
+= Status
+
+{<img src="http://travis-ci.org/satoryu/tepco_usage_api.png" />}[http://travis-ci.org/satoryu/tepco_usage_api]
+
+
 Autho:: Tatsuya Sato
 E-mail:: satoryu.1981@gmail.com
