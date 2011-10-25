@@ -18,5 +18,7 @@ The wrapper class allows us to easily get the power usage information provided b
     lib/**/*.rb
     spec/**/*
   ]]
+  spec.add_dependency('nokogiri', '>= 1.4.0')
+  spec.add_development_dependency('rspec')
 end
 
