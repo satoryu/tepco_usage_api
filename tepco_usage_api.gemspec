@@ -2,7 +2,7 @@ require 'rake'
 
 Gem::Specification.new do |spec|
   spec.name = 'tepco_usage_api'
-  spec.required_ruby_version = '>= 1.8.7'
+  spec.required_ruby_version = '>= 1.9.3'
   spec.summary = 'The gem to talk with Tepco Usage API. '
   spec.version = '0.4.0'
   spec.license = 'MIT'
@@ -18,7 +18,10 @@ The wrapper class allows us to easily get the power usage information provided b
     lib/**/*.rb
     spec/**/*
   ]]
-  spec.add_dependency('nokogiri', '>= 1.4.0')
-  spec.add_development_dependency('rspec')
+
+  spec.add_dependency 'nokogiri', '~> 1.6.0'
+
+  spec.add_development_dependency 'rspec', '~> 2.14.0'
+  spec.add_development_dependency 'rake'
 end
 
