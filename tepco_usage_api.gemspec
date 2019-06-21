@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.email   = 'satoryu.1981@gmail.com'
   spec.homepage = 'http://github.com/satoryu/tepco_usage_api/'
   spec.description = <<-"DESC"
-This gem provides tepco-usage-api wrapper class. 
-The wrapper class allows us to easily get the power usage information provided by TEPCO. 
+This gem provides tepco-usage-api wrapper class.
+The wrapper class allows us to easily get the power usage information provided by TEPCO.
   DESC
   spec.files = FileList[%w[
     [A-Z]*
@@ -21,7 +21,7 @@ The wrapper class allows us to easily get the power usage information provided b
 
   spec.add_dependency 'nokogiri', '~> 1.6.0'
 
-  spec.add_development_dependency 'rspec', '~> 2.14.0'
-  spec.add_development_dependency 'rake'
+  spec.add_development_dependency 'rspec', '~> 3.8'
+  spec.add_development_dependency 'rake', '~> 12.3'
 end
 
