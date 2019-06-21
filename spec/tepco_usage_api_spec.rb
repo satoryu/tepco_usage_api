@@ -1,13 +1,12 @@
-require File.expand_path(File.join(
-          File.dirname(__FILE__), 'spec_helper'))
+require 'spec_helper'
 require 'date'
 
 describe TepcoUsage do
   describe "#latest" do
     before do
       tepco = TepcoUsage.send(:tepco)
-      tepco.stub!(:request).with('/latest.json').and_return do
-        mock = mock(Object.new, :body => <<-JSON)
+      allow(tepco).to receive(:request).with('/latest.json').and_return(
+        double('dummy response', :body => <<-JSON)
            {
              "saving": false,
              "hour": 0,
@@ -22,13 +21,12 @@ describe TepcoUsage do
              "day": 27
            }
         JSON
-      end
+      )
     end
 
-    subject{TepcoUsage}
-    its(:latest) { should_not be_nil }
+    it { expect(TepcoUsage.latest).to_not be_nil }
     it do
-      TepcoUsage.latest['saving'].should be_false
+      expect(TepcoUsage.latest['saving']).to be_falsy
     end
 
   end
@@ -38,8 +36,8 @@ describe TepcoUsage do
         today = Date.today
         path = "/#{today.year}/#{today.month}/#{today.day}.json"
         tepco = TepcoUsage.send(:tepco)
-        tepco.stub!(:request).with(path).and_return do
-          mock = mock(Object.new, :body => <<-JSON)
+        allow(tepco).to receive(:request).with(path).and_return(
+          double('dummy response', :body => <<-JSON)
           [
             {
               "saving": false,
@@ -69,10 +67,10 @@ describe TepcoUsage do
             }
           ]
           JSON
-        end
+        )
       end
-      subject{TepcoUsage.at(Date.today)}
-      it { should_not be_nil }
+
+      it { expect(TepcoUsage.at(Date.today)).to_not be_nil }
     end
 
     context "Given Time object" do
@@ -80,8 +78,8 @@ describe TepcoUsage do
         @now = Time.now
         path = "/#{@now.year}/#{@now.month}/#{@now.day}/#{@now.hour}.json"
         tepco = TepcoUsage.send(:tepco)
-        tepco.stub!(:request).with(path).and_return do
-          mock = mock(Object.new, :body => <<-JSON)
+        allow(tepco).to receive(:request).with(path).and_return(
+          double('dummy response', :body => <<-JSON)
           [
             {
               "saving": false,
@@ -111,42 +109,24 @@ describe TepcoUsage do
             }
           ]
           JSON
-        end
+        )
       end
-      subject{TepcoUsage.at(@now)}
-      it { should_not be_nil }
+
+      it { expect(TepcoUsage.at(@now)).to_not be_nil }
     end
   end
+
   describe "#in" do
     before do
       @now = Time.now
       path = "/#{@now.year}/#{@now.month}.json"
       tepco = TepcoUsage.send(:tepco)
-      tepco.stub!(:request).with(path).and_return do
-        mock(Object.new, :body => '{"body": "dummy"}')
-      end
+      expect(tepco).to receive(:request).with(path).and_return(
+        double('dummy response', :body => '{"body": "dummy"}')
+      )
     end
 
     subject{TepcoUsage.in @now}
-    it { should_not be_nil }
-  end
-
-  context "Configuration" do
-    describe "About Proxy" do
-      before do
-        host = 'proxy.example.com'
-        port = 4567
-        user = 'proxy_user'
-        password = 'proxy_pass'
-        @proxy = URI.parse("http://#{user}:#{password}@#{host}:#{port}")
-        @tepco = TepcoUsage.new(:proxy => @proxy)
-      end
-      subject {@tepco.send :http_class}
-      it { should be_proxy_class }
-      its(:proxy_address) { should == @proxy.host }
-      its(:proxy_port) { should == @proxy.port }
-      its(:proxy_user) { should == @proxy.user }
-      its(:proxy_pass) { should == @proxy.password }
-    end
+    it { expect(TepcoUsage.in(@now)).to_not be_nil }
   end
 end
